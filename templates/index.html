@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Salary Predictor</title>
+    <style>
+        :root {
+            --bg: #07111f;
+            --panel: #0f1b2d;
+            --panel-2: #14263d;
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+            --accent: #2dd4bf;
+            --accent-2: #34d399;
+            --danger: #f87171;
+            --shadow: 0 18px 45px rgba(2, 8, 23, 0.42);
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg), #0c1727);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 28px;
+        }
+
+        .shell {
+            max-width: 1180px;
+            margin: 0 auto;
+            display: grid;
+            gap: 24px;
+        }
+
+        .hero, .card {
+            background: rgba(15, 27, 45, 0.92);
+            border: 1px solid rgba(45, 212, 191, 0.14);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(16px);
+        }
+
+        .hero {
+            padding: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .hero h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.7rem, 2.2vw, 2.4rem);
+        }
+
+        .hero p {
+            margin: 0;
+            color: var(--muted);
+            max-width: 720px;
+            line-height: 1.6;
+        }
+
+        .badge {
+            background: rgba(45, 212, 191, 0.16);
+            color: var(--accent);
+            border: 1px solid rgba(45, 212, 191, 0.28);
+            padding: 10px 14px;
+            border-radius: 999px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 24px;
+        }
+
+        .card { padding: 24px; }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 18px;
+            font-size: 1.15rem;
+        }
+
+        form {
+            display: grid;
+            gap: 18px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field label {
+            font-size: 0.92rem;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .field input, .field select {
+            width: 100%;
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-size: 0.98rem;
+            color: var(--text);
+            background: var(--panel-2);
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .field input:focus, .field select:focus {
+            outline: none;
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .field small {
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .submit-row {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 8px;
+        }
+
+        button {
+            border: none;
+            border-radius: 999px;
+            padding: 12px 20px;
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #03110d;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 10px 25px rgba(45, 212, 191, 0.25);
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, rgba(45, 212, 191, 0.16), rgba(52, 211, 153, 0.12));
+            border: 1px solid rgba(45, 212, 191, 0.24);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .result-box h3 {
+            margin: 0 0 8px;
+            color: var(--muted);
+            font-size: 1rem;
+        }
+
+        .result-value {
+            font-size: clamp(1.8rem, 2.6vw, 2.6rem);
+            font-weight: 800;
+            color: #d1fae5;
+            letter-spacing: 0.02em;
+        }
+
+        .info {
+            margin-top: 16px;
+            color: var(--muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .error {
+            margin-top: 12px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: rgba(248, 113, 113, 0.14);
+            color: #fecaca;
+            border: 1px solid rgba(248, 113, 113, 0.25);
+        }
+
+        @media (max-width: 900px) {
+            .content { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 640px) {
+            body { padding: 16px; }
+            .hero, .card { padding: 18px; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <section class="hero">
+            <div>
+                <h1>Employee Salary Predictor</h1>
+                <p>Estimate an employee salary using a production-ready Flask app backed by a pre-trained RandomForestRegressor model and the same preprocessing structure used during training.</p>
+            </div>
+            <div class="badge">Scikit-Learn • Flask • Production UI</div>
+        </section>
+
+        <section class="content">
+            <div class="card">
+                <h2>Enter employee profile</h2>
+                <form method="post">
+                    <div class="grid-2">
+                        <div class="field">
+                            <label for="age">Age</label>
+                            <input id="age" name="age" type="number" min="18" max="80" step="1" placeholder="e.g. 35" value="{{ form.age if form and form.age else '' }}" required>
+                            <small>Range: 18–80</small>
+                        </div>
+                        <div class="field">
+                            <label for="performance_score">Performance Score</label>
+                            <input id="performance_score" name="performance_score" type="number" min="1" max="4" step="0.1" placeholder="1.0 – 4.0" value="{{ form.performance_score if form and form.performance_score else '' }}" required>
+                            <small>Use 1.0 to 4.0</small>
+                        </div>
+                        <div class="field">
+                            <label for="remote_work">Remote Work</label>
+                            <select id="remote_work" name="remote_work">
+                                <option value="1" {% if form and form.remote_work == '1' %}selected{% endif %}>Yes</option>
+                                <option value="0" {% if form and form.remote_work == '0' %}selected{% endif %}>No</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="experience_years">Experience Years</label>
+                            <input id="experience_years" name="experience_years" type="number" min="0" max="40" step="0.01" placeholder="e.g. 5.5" value="{{ form.experience_years if form and form.experience_years else '' }}" required>
+                            <small>Range: 0.0–40.0</small>
+                        </div>
+                        <div class="field">
+                            <label for="join_year">Join Year</label>
+                            <input id="join_year" name="join_year" type="number" min="2000" max="2030" step="1" placeholder="e.g. 2020" value="{{ form.join_year if form and form.join_year else '' }}" required>
+                        </div>
+                        <div class="field">
+                            <label for="join_month">Join Month</label>
+                            <input id="join_month" name="join_month" type="number" min="1" max="12" step="1" placeholder="1–12" value="{{ form.join_month if form and form.join_month else '' }}" required>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="field">
+                            <label for="department">Department</label>
+                            <select id="department" name="department">
+                                {% for option in department_options %}
+                                <option value="{{ option }}" {% if form and form.department == option %}selected{% endif %}>{{ option }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="region">Region</label>
+                            <select id="region" name="region">
+                                {% for option in region_options %}
+                                <option value="{{ option }}" {% if form and form.region == option %}selected{% endif %}>{{ option }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="status">Status</label>
+                            <select id="status" name="status">
+                                {% for option in status_options %}
+                                <option value="{{ option }}" {% if form and form.status == option %}selected{% endif %}>{{ option }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="submit-row">
+                        <button type="submit">Predict Salary</button>
+                    </div>
+                </form>
+
+                {% if error_message %}
+                <div class="error">{{ error_message }}</div>
+                {% endif %}
+            </div>
+
+            <div class="card">
+                <h2>Prediction result</h2>
+                <div class="result-box">
+                    {% if prediction_display %}
+                    <h3>Estimated salary</h3>
+                    <div class="result-value">{{ prediction_display }}</div>
+                    {% else %}
+                    <h3>Estimated salary</h3>
+                    <div class="result-value">$0.00</div>
+                    {% endif %}
+                    <div class="info">
+                        The backend builds the exact feature vector in the same column order used during training, including the one-hot encoded dummy columns for department, region, and status.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
