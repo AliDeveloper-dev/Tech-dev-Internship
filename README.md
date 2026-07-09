@@ -10,12 +10,9 @@
 <img src="https://img.shields.io/badge/Jupyter-Notebook-F37626?style=for-the-badge&logo=jupyter&logoColor=white">
 <img src="https://img.shields.io/badge/HTML5-Frontend-E34F26?style=for-the-badge&logo=html5&logoColor=white">
 <img src="https://img.shields.io/badge/CSS3-Styling-1572B6?style=for-the-badge&logo=css3&logoColor=white">
-<img src="https://img.shields.io/badge/JavaScript-Interactive-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-<img src="https://img.shields.io/badge/Joblib-Model%20Serialization-009688?style=for-the-badge">
 <img src="https://img.shields.io/badge/Machine%20Learning-Regression-16A34A?style=for-the-badge">
 <img src="https://img.shields.io/badge/Data%20Science-AI-7B2CBF?style=for-the-badge">
 <img src="https://img.shields.io/badge/Model%20Deployment-Production-0EA5E9?style=for-the-badge">
-<img src="https://img.shields.io/badge/Web%20Dashboard-HR%20Portal-DC2626?style=for-the-badge">
 
 </p>
 
@@ -180,9 +177,9 @@ The deployment includes:
 ## 📥 Step 1 — Clone the Repository
 
 ```bash
-git clone https://github.com/AliDeveloper-dev/Tech-dev-Internship.git
+git clone https://github.com/AliDeveloper-dev/Employee_Salary_Prediction.git
 
-cd Tech-dev-Internship
+cd Employee_Salary_Prediction
 ```
 
 ---
